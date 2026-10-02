@@ -34,6 +34,6 @@ public class Expense {
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(name = "created_date")
-    private LocalDate createdDate;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 }
