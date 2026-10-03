@@ -1,5 +1,6 @@
 package com.io.github.cawodevelopment.expense_tracker.expense;
 
+import com.io.github.cawodevelopment.expense_tracker.exception.ResourceNotFoundException;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse;
 import jakarta.persistence.NoResultException;
@@ -22,7 +23,7 @@ public class ExpenseService {
     public ExpenseResponse getExpenseById(Long id) {
         Expense expense = expenseRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         return expenseMapper.toExpenseResponse(expense);
     }
@@ -47,7 +48,7 @@ public class ExpenseService {
     public ExpenseResponse updateExpenseById(Long id, ExpenseRequest request){
         Expense expense = expenseRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         expense.setDescription(request.description());
         expense.setCategory(request.category());
@@ -61,7 +62,7 @@ public class ExpenseService {
     public void deleteExpenseById(Long id){
         Expense expense = expenseRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         expenseRepository.delete(expense);
     }

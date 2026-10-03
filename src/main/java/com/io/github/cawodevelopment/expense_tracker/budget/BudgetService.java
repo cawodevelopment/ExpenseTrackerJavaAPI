@@ -2,10 +2,10 @@ package com.io.github.cawodevelopment.expense_tracker.budget;
 
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetRequest;
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
+import com.io.github.cawodevelopment.expense_tracker.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,7 +22,7 @@ public class BudgetService {
     public BudgetResponse getBudgetById(Long id){
         Budget budget = budgetRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         return budgetMapper.toBudgetResponse(budget);
     }
@@ -47,7 +47,7 @@ public class BudgetService {
     public BudgetResponse updateBudgetById(Long id, BudgetRequest request){
         Budget budget = budgetRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         budget.setDescription(request.description());
         budget.setCategory(request.category());
@@ -62,7 +62,7 @@ public class BudgetService {
     public void deleteBudgetById(Long id){
         budgetRepository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         budgetRepository.deleteById(id);
     }
