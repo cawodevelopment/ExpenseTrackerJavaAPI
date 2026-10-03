@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController("/v1/expenses")
+@RestController
+@RequestMapping("/v1/expenses")
 public class ExpenseController {
 
     private ExpenseService expenseService;
@@ -20,7 +21,7 @@ public class ExpenseController {
     @GetMapping
     public ResponseEntity<List<ExpenseResponse>> getExpenses() {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(expenseService.getExpenses());
     }
 
