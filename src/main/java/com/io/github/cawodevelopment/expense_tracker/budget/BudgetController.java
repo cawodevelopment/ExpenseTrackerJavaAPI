@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api/v1/budgets")
+@RestController("/v1/budgets")
 public class BudgetController {
 
     private BudgetService budgetService;

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController("/api/v1/expenses")
+@RestController("/v1/expenses")
 public class ExpenseController {
 
     private ExpenseService expenseService;

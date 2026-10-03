@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
 
-@RestController("/api/v1/dashboard")
+@RestController("/v1/dashboard")
 public class DashboardController {
 
     private DashboardService dashboardService;
