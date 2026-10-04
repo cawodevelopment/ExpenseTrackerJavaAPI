@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,10 +31,9 @@ public class User {
     private LocalDate createdAt;
 
     //Relationships
+    @OneToMany(mappedBy = "user")
+    private List<Budget> budgets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "budget")
-    private List<Budget> budgets;
-
-    @OneToMany(mappedBy = "expense")
-    private List<Expense> expenses;
+    @OneToMany(mappedBy = "user")
+    private List<Expense> expenses = new ArrayList<>();
 }

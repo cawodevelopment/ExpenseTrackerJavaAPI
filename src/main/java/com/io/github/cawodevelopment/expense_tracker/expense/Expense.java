@@ -39,7 +39,7 @@ public class Expense {
     private LocalDate createdAt;
 
     //Relationships
-    @ManyToOne
-    @JoinColumn(name = "user")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }
