@@ -1,6 +1,7 @@
 package com.io.github.cawodevelopment.expense_tracker.budget;
 
 import com.io.github.cawodevelopment.expense_tracker.category.Category;
+import com.io.github.cawodevelopment.expense_tracker.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +39,9 @@ public class Budget {
 
     @Column(name = "created_at")
     private LocalDate createdAt;
+
+    //Relationships
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user;
 }

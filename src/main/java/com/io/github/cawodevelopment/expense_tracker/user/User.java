@@ -1,0 +1,39 @@
+package com.io.github.cawodevelopment.expense_tracker.user;
+
+import com.io.github.cawodevelopment.expense_tracker.budget.Budget;
+import com.io.github.cawodevelopment.expense_tracker.expense.Expense;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String email;
+
+    private String password;
+
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
+    //Relationships
+
+    @OneToMany(mappedBy = "budget")
+    private List<Budget> budgets;
+
+    @OneToMany(mappedBy = "expense")
+    private List<Expense> expenses;
+}
