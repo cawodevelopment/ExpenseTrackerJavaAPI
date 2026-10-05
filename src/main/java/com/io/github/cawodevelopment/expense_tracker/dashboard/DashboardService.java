@@ -16,7 +16,7 @@ import java.util.TreeMap;
 @Service
 public class DashboardService {
 
-    private ExpenseRepository expenseRepository;
+    private final ExpenseRepository expenseRepository;
 
     public DashboardService(ExpenseRepository expenseRepository) {
         this.expenseRepository = expenseRepository;

@@ -5,6 +5,7 @@ import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,43 +14,43 @@ import java.util.List;
 @RequestMapping("/v1/budgets")
 public class BudgetController {
 
-    private BudgetService budgetService;
+    private final BudgetService budgetService;
 
     public BudgetController(BudgetService budgetService) {
         this.budgetService = budgetService;
     }
 
     @GetMapping
-    public ResponseEntity<List<BudgetResponse>> getBudgets() {
+    public ResponseEntity<List<BudgetResponse>> getBudgets(Authentication authentication) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(budgetService.getBudgets());
+                .body(budgetService.getBudgets(authentication));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BudgetResponse> getBudgetById(@PathVariable Long id) {
+    public ResponseEntity<BudgetResponse> getBudgetById(Authentication authentication, @PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(budgetService.getBudgetById(id));
+                .body(budgetService.getBudgetById(authentication, id));
     }
 
     @PostMapping
-    public ResponseEntity<BudgetResponse> createBudget(@Valid @RequestBody BudgetRequest request) {
+    public ResponseEntity<BudgetResponse> createBudget(Authentication authentication, @Valid @RequestBody BudgetRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(budgetService.createBudget(request));
+                .body(budgetService.createBudget(authentication, request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BudgetResponse> updateBudgetById(@PathVariable Long id, @Valid @RequestBody BudgetRequest request) {
+    public ResponseEntity<BudgetResponse> updateBudgetById(Authentication authentication, @PathVariable Long id, @Valid @RequestBody BudgetRequest request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(budgetService.updateBudgetById(id, request));
+                .body(budgetService.updateBudgetById(authentication, id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBudgetById(@PathVariable Long id) {
-        budgetService.deleteBudgetById(id);
+    public ResponseEntity<Void> deleteBudgetById(Authentication authentication, @PathVariable Long id) {
+        budgetService.deleteBudgetById(authentication, id);
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
