@@ -1,6 +1,5 @@
 package com.io.github.cawodevelopment.expense_tracker.dashboard;
 
-import com.io.github.cawodevelopment.expense_tracker.budget.BudgetRepository;
 import com.io.github.cawodevelopment.expense_tracker.dashboard.dto.SpendingOverTimeResponse;
 import com.io.github.cawodevelopment.expense_tracker.expense.Expense;
 import com.io.github.cawodevelopment.expense_tracker.expense.ExpenseRepository;

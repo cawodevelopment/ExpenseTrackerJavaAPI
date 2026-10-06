@@ -4,7 +4,6 @@ import com.io.github.cawodevelopment.expense_tracker.auth.dto.RegisterRequest;
 import com.io.github.cawodevelopment.expense_tracker.auth.dto.UserResponse;
 import com.io.github.cawodevelopment.expense_tracker.user.User;
 import com.io.github.cawodevelopment.expense_tracker.user.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

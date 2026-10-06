@@ -39,7 +39,7 @@ public class ExpenseController {
                         authentication,
                         pageable,
                         category,
-                        maxAmount,
+                        minAmount,
                         maxAmount,
                         date)
                 );
