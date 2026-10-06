@@ -1,9 +1,7 @@
 package com.io.github.cawodevelopment.expense_tracker.user;
 
 import com.io.github.cawodevelopment.expense_tracker.auth.dto.UserResponse;
-import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.user.dto.UserChangePasswordRequest;
-import com.io.github.cawodevelopment.expense_tracker.user.dto.UserRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

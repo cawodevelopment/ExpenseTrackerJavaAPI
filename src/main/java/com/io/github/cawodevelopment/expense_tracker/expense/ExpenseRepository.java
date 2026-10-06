@@ -16,14 +16,14 @@ public interface ExpenseRepository  extends JpaRepository<Expense, Long> {
     @Query("""
     SELECT e
     FROM Expense e
-    WHERE e.user.username = :username
+    WHERE e.user.email = :email
       AND (:category IS NULL OR e.category = :category)
       AND (:minAmount IS NULL OR e.amount >= :minAmount)
       AND (:maxAmount IS NULL OR e.amount <= :maxAmount)
       AND (:date IS NULL OR e.date = :date)
 """)
-    Page<Expense> findAllByUsername(
-            @Param("username") String username,
+        Page<Expense> findAllByEmail(
+            @Param("email") String email,
             Pageable pageable,
             @Param("category") Category category,
             @Param("minAmount") BigDecimal minAmount,
@@ -31,5 +31,5 @@ public interface ExpenseRepository  extends JpaRepository<Expense, Long> {
             @Param("date") LocalDate date
     );
 
-    Optional<Expense> findByUsernameAndId(String username, Long id);
+    Optional<Expense> findByUser_EmailAndId(String email, Long id);
 }

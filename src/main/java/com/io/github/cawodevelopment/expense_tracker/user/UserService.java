@@ -18,7 +18,7 @@ public class UserService {
 
     public UserResponse updateMe(Authentication authentication, UserChangePasswordRequest request) {
         User user = userRepository
-                .findByUsername(authentication.getName())
+                .findByEmail(authentication.getName())
                 .orElseThrow(() -> new IllegalStateException("User not found"));
 
         user.setPassword(request.password());
@@ -28,7 +28,7 @@ public class UserService {
 
     public void deleteMe(Authentication authentication) {
         User user = userRepository
-                .findByUsername(authentication.getName())
+                .findByEmail(authentication.getName())
                 .orElseThrow(() -> new IllegalStateException("User not found"));
 
         userRepository.deleteById(user.getId());

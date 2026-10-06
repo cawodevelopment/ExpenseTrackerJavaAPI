@@ -33,7 +33,7 @@ public class ExpenseService {
                                              BigDecimal minAmount,
                                              BigDecimal maxAmount,
                                              LocalDate date) {
-        Page<Expense> expenses = expenseRepository.findAllByUsername(
+        Page<Expense> expenses = expenseRepository.findAllByEmail(
                 authentication.getName(),
                 pageable,
                 category,
@@ -48,7 +48,7 @@ public class ExpenseService {
 
     public ExpenseResponse getExpenseById(Authentication authentication, Long id) {
         Expense expense = expenseRepository
-                .findByUsernameAndId(authentication.getName(), id)
+            .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         return expenseMapper.toExpenseResponse(expense);
@@ -59,7 +59,7 @@ public class ExpenseService {
         expense.setCreatedAt(LocalDate.now());
 
         User user = userRepository
-                .findByUsername(authentication.getName())
+                .findByEmail(authentication.getName())
                 .orElseThrow(() -> new IllegalStateException("Username not found"));
 
         expense.setUser(user);
@@ -70,7 +70,7 @@ public class ExpenseService {
 
     public ExpenseResponse updateExpenseById(Authentication authentication, Long id, ExpenseRequest request){
         Expense expense = expenseRepository
-                .findByUsernameAndId(authentication.getName(), id)
+            .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         expense.setDescription(request.description());
@@ -84,7 +84,7 @@ public class ExpenseService {
 
     public void deleteExpenseById(Authentication authentication, Long id){
         Expense expense = expenseRepository
-                .findByUsernameAndId(authentication.getName(), id)
+            .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         expenseRepository.delete(expense);

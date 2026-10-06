@@ -10,24 +10,23 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
-    Optional<Budget> findByUsernameAndId(String username, Long id);
+  Optional<Budget> findByUser_EmailAndId(String email, Long id);
 
     @Query("""
         SELECT b
         FROM Budget b
-        WHERE b.user.username = :username
+        WHERE b.user.email = :email
           AND (:category IS NULL OR b.category = :category)
           AND (:amount IS NULL OR b.amount = :amount)
           AND (:startDate IS NULL OR b.startDate >= :startDate)
           AND (:endDate IS NULL OR b.endDate <= :endDate)
         """)
-    Page<Budget> findAllByUsername(
-            @Param("username") String username,
+        Page<Budget> findAllByEmail(
+          @Param("email") String email,
             Pageable pageable,
             @Param("category") Category category,
             @Param("amount") BigDecimal amount,

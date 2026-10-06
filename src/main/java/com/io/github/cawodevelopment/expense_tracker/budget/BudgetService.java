@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class BudgetService {
@@ -30,7 +29,7 @@ public class BudgetService {
 
     public BudgetResponse getBudgetById(Authentication authentication, Long id){
         Budget budget = budgetRepository
-                .findByUsernameAndId(authentication.getName(), id)
+            .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         return budgetMapper.toBudgetResponse(budget);
@@ -43,7 +42,7 @@ public class BudgetService {
                                            LocalDate startDate,
                                            LocalDate endDate
                                            ) {
-        Page<Budget> budgets = budgetRepository.findAllByUsername(
+        Page<Budget> budgets = budgetRepository.findAllByEmail(
                 authentication.getName(),
                 pageable,
                 category,
@@ -60,7 +59,7 @@ public class BudgetService {
         budget.setCreatedAt(LocalDate.now());
 
         User user = userRepository
-                .findByUsername(authentication.getName())
+                .findByEmail(authentication.getName())
                 .orElseThrow(() -> new IllegalStateException("Username not found"));
 
         budget.setUser(user);
@@ -71,7 +70,7 @@ public class BudgetService {
 
     public BudgetResponse updateBudgetById(Authentication authentication, Long id, BudgetRequest request){
         Budget budget = budgetRepository
-                .findByUsernameAndId(authentication.getName(), id)
+            .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         budget.setDescription(request.description());
@@ -86,7 +85,7 @@ public class BudgetService {
 
     public void deleteBudgetById(Authentication authentication, Long id){
         budgetRepository
-                .findByUsernameAndId(authentication.getName(), id)
+            .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
         budgetRepository.deleteById(id);
