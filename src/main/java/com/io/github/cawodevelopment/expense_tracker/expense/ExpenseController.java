@@ -6,6 +6,7 @@ import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ public class ExpenseController {
 
     @GetMapping
     public ResponseEntity<Page<ExpenseResponse>> getExpenses(Authentication authentication,
-                                                             Pageable pageable,
+                                                             @PageableDefault(page = 0, size = 5) Pageable pageable,
                                                              @RequestParam(required = false) Category category,
                                                              @RequestParam(required = false) BigDecimal minAmount,
                                                              @RequestParam(required = false) BigDecimal maxAmount,

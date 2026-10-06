@@ -6,6 +6,7 @@ import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ public class BudgetController {
 
     @GetMapping
     public ResponseEntity<Page<BudgetResponse>> getBudgets(Authentication authentication,
-                                                           Pageable pageable,
+                                                           @PageableDefault(page = 0, size = 5) Pageable pageable,
                                                            @RequestParam(required = false) Category category,
                                                            @RequestParam(required = false) BigDecimal amount,
                                                            @RequestParam(required = false) LocalDate startDate,
