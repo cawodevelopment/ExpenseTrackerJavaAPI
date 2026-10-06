@@ -1,5 +1,6 @@
 package com.io.github.cawodevelopment.expense_tracker.expense;
 
+import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse;
 import jakarta.validation.Valid;
@@ -9,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 
 @RestController
@@ -22,10 +26,22 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ExpenseResponse>> getExpenses(Authentication authentication, Pageable pageable) {
+    public ResponseEntity<Page<ExpenseResponse>> getExpenses(Authentication authentication,
+                                                             Pageable pageable,
+                                                             @RequestParam(required = false) Category category,
+                                                             @RequestParam(required = false) BigDecimal minAmount,
+                                                             @RequestParam(required = false) BigDecimal maxAmount,
+                                                             @RequestParam(required = false) LocalDate date) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(expenseService.getExpenses(authentication, pageable));
+                .body(expenseService.getExpenses(
+                        authentication,
+                        pageable,
+                        category,
+                        maxAmount,
+                        maxAmount,
+                        date)
+                );
     }
 
     @GetMapping("/{id}")

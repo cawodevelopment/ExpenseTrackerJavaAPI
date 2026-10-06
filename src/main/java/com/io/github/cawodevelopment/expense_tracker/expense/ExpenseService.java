@@ -1,5 +1,6 @@
 package com.io.github.cawodevelopment.expense_tracker.expense;
 
+import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import com.io.github.cawodevelopment.expense_tracker.exception.ResourceNotFoundException;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -24,8 +27,20 @@ public class ExpenseService {
         this.userRepository = userRepository;
     }
 
-    public Page<ExpenseResponse> getExpenses(Authentication authentication, Pageable pageable) {
-        Page<Expense> expenses = expenseRepository.findAllByUsername(authentication.getName(), pageable);
+    public Page<ExpenseResponse> getExpenses(Authentication authentication,
+                                             Pageable pageable,
+                                             Category category,
+                                             BigDecimal minAmount,
+                                             BigDecimal maxAmount,
+                                             LocalDate date) {
+        Page<Expense> expenses = expenseRepository.findAllByUsername(
+                authentication.getName(),
+                pageable,
+                category,
+                minAmount,
+                maxAmount,
+                date
+        );
 
         return expenses
                 .map(expense -> expenseMapper.toExpenseResponse(expense));

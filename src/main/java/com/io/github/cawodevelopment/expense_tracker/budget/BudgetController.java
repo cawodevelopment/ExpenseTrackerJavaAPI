@@ -2,6 +2,7 @@ package com.io.github.cawodevelopment.expense_tracker.budget;
 
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetRequest;
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
+import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -23,10 +26,22 @@ public class BudgetController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<BudgetResponse>> getBudgets(Authentication authentication, Pageable pageable) {
+    public ResponseEntity<Page<BudgetResponse>> getBudgets(Authentication authentication,
+                                                           Pageable pageable,
+                                                           @RequestParam(required = false) Category category,
+                                                           @RequestParam(required = false) BigDecimal amount,
+                                                           @RequestParam(required = false) LocalDate startDate,
+                                                           @RequestParam(required = false) LocalDate endDate) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(budgetService.getBudgets(authentication, pageable));
+                .body(budgetService.getBudgets(
+                        authentication,
+                        pageable,
+                        category,
+                        amount,
+                        startDate,
+                        endDate)
+                );
     }
 
     @GetMapping("/{id}")
