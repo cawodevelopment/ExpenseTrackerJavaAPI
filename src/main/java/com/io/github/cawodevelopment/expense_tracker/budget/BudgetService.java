@@ -5,6 +5,8 @@ import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
 import com.io.github.cawodevelopment.expense_tracker.exception.ResourceNotFoundException;
 import com.io.github.cawodevelopment.expense_tracker.user.User;
 import com.io.github.cawodevelopment.expense_tracker.user.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +34,11 @@ public class BudgetService {
         return budgetMapper.toBudgetResponse(budget);
     }
 
-    public List<BudgetResponse> getBudgets(Authentication authentication) {
-        List<Budget> budgets = budgetRepository.findAllByUsername(authentication.getName());
+    public Page<BudgetResponse> getBudgets(Authentication authentication, Pageable pageable) {
+        Page<Budget> budgets = budgetRepository.findAllByUsername(authentication.getName(), pageable);
 
         return budgets
-                .stream()
-                .map(budget -> budgetMapper.toBudgetResponse(budget))
-                .toList();
+                .map(budget -> budgetMapper.toBudgetResponse(budget));
     }
 
     public BudgetResponse createBudget(Authentication authentication, BudgetRequest request){

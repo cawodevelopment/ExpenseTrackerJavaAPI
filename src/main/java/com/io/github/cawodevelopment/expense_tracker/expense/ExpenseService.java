@@ -5,11 +5,11 @@ import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse;
 import com.io.github.cawodevelopment.expense_tracker.user.User;
 import com.io.github.cawodevelopment.expense_tracker.user.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class ExpenseService {
@@ -24,13 +24,11 @@ public class ExpenseService {
         this.userRepository = userRepository;
     }
 
-    public List<ExpenseResponse> getExpenses(Authentication authentication) {
-        List<Expense> expenses = expenseRepository.findAllByUsername(authentication.getName());
+    public Page<ExpenseResponse> getExpenses(Authentication authentication, Pageable pageable) {
+        Page<Expense> expenses = expenseRepository.findAllByUsername(authentication.getName(), pageable);
 
         return expenses
-                .stream()
-                .map(expense -> expenseMapper.toExpenseResponse(expense))
-                .toList();
+                .map(expense -> expenseMapper.toExpenseResponse(expense));
     }
 
     public ExpenseResponse getExpenseById(Authentication authentication, Long id) {

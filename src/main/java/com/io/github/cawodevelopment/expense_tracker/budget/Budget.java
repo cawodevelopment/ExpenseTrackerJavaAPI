@@ -3,6 +3,7 @@ package com.io.github.cawodevelopment.expense_tracker.budget;
 import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import com.io.github.cawodevelopment.expense_tracker.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
