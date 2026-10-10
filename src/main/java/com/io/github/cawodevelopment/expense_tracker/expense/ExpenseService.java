@@ -4,6 +4,7 @@ import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import com.io.github.cawodevelopment.expense_tracker.exception.ResourceNotFoundException;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse;
+import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseUpdateRequest;
 import com.io.github.cawodevelopment.expense_tracker.user.User;
 import com.io.github.cawodevelopment.expense_tracker.user.UserRepository;
 import org.springframework.data.domain.Page;
@@ -68,15 +69,12 @@ public class ExpenseService {
         return expenseMapper.toExpenseResponse(expense);
     }
 
-    public ExpenseResponse updateExpenseById(Authentication authentication, Long id, ExpenseRequest request){
+    public ExpenseResponse updateExpenseById(Authentication authentication, Long id, ExpenseUpdateRequest request){
         Expense expense = expenseRepository
             .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
-        expense.setDescription(request.description());
-        expense.setCategory(request.category());
-        expense.setAmount(request.amount());
-        expense.setDate(request.date());
+        expenseMapper.updateExpenseFromRequest(expense, request);
 
         expenseRepository.save(expense);
         return expenseMapper.toExpenseResponse(expense);

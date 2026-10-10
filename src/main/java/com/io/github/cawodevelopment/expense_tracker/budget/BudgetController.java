@@ -2,6 +2,7 @@ package com.io.github.cawodevelopment.expense_tracker.budget;
 
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetRequest;
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
+import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetUpdateRequest;
 import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -58,7 +59,7 @@ public class BudgetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BudgetResponse> updateBudgetById(Authentication authentication, @PathVariable Long id, @Valid @RequestBody BudgetRequest request) {
+    public ResponseEntity<BudgetResponse> updateBudgetById(Authentication authentication, @PathVariable Long id, @Valid @RequestBody BudgetUpdateRequest request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(budgetService.updateBudgetById(authentication, id, request));

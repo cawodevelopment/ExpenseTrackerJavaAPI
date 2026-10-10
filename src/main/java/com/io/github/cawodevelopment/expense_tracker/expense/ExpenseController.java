@@ -3,6 +3,7 @@ package com.io.github.cawodevelopment.expense_tracker.expense;
 import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseRequest;
 import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseResponse;
+import com.io.github.cawodevelopment.expense_tracker.expense.dto.ExpenseUpdateRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,7 +61,7 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExpenseResponse> updateExpenseById(Authentication authentication, @PathVariable Long id, @Valid @RequestBody ExpenseRequest request) {
+    public ResponseEntity<ExpenseResponse> updateExpenseById(Authentication authentication, @PathVariable Long id, @Valid @RequestBody ExpenseUpdateRequest request) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(expenseService.updateExpenseById(authentication, id, request));

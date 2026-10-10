@@ -2,6 +2,7 @@ package com.io.github.cawodevelopment.expense_tracker.budget;
 
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetRequest;
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
+import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetUpdateRequest;
 import com.io.github.cawodevelopment.expense_tracker.category.Category;
 import com.io.github.cawodevelopment.expense_tracker.exception.ResourceNotFoundException;
 import com.io.github.cawodevelopment.expense_tracker.user.User;
@@ -68,16 +69,12 @@ public class BudgetService {
         return budgetMapper.toBudgetResponse(budget);
     }
 
-    public BudgetResponse updateBudgetById(Authentication authentication, Long id, BudgetRequest request){
+    public BudgetResponse updateBudgetById(Authentication authentication, Long id, BudgetUpdateRequest request){
         Budget budget = budgetRepository
             .findByUser_EmailAndId(authentication.getName(), id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense", id));
 
-        budget.setDescription(request.description());
-        budget.setCategory(request.category());
-        budget.setAmount(request.amount());
-        budget.setStartDate(request.startDate());
-        budget.setEndDate(request.endDate());
+        budgetMapper.updateBudgetFromRequest(budget, request);
 
         budgetRepository.save(budget);
         return budgetMapper.toBudgetResponse(budget);

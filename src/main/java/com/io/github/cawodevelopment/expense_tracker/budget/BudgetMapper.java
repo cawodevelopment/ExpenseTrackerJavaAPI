@@ -2,6 +2,7 @@ package com.io.github.cawodevelopment.expense_tracker.budget;
 
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetResponse;
 import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetRequest;
+import com.io.github.cawodevelopment.expense_tracker.budget.dto.BudgetUpdateRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,6 +31,14 @@ public class BudgetMapper {
                 budget.getCreatedAt()
         );
 
+    }
+
+    public void updateBudgetFromRequest(Budget budget, BudgetUpdateRequest request) {
+        budget.setDescription(request.description());
+        budget.setCategory(request.category());
+        budget.setAmount(request.amount());
+        budget.setStartDate(request.startDate());
+        budget.setEndDate(request.endDate());
     }
 
 
